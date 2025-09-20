@@ -16,15 +16,16 @@ export const runExec = async ({
     episodeFilename.lastIndexOf(".")
   );
 
+  // Allow optional whitespace within placeholders (e.g., `{{ episode_path }}`) so user templates are more forgiving.
   const execCmd = exec
-    .replace(/{{episode_path}}/g, escapeArgForShell(outputPodcastPath))
-    .replace(/{{episode_path_base}}/g, escapeArgForShell(basePath))
-    .replace(/{{episode_filename}}/g, escapeArgForShell(episodeFilename))
+    .replace(/{{\s*episode_path\s*}}/g, escapeArgForShell(outputPodcastPath))
+    .replace(/{{\s*episode_path_base\s*}}/g, escapeArgForShell(basePath))
+    .replace(/{{\s*episode_filename\s*}}/g, escapeArgForShell(episodeFilename))
     .replace(
-      /{{episode_filename_base}}/g,
+      /{{\s*episode_filename_base\s*}}/g,
       escapeArgForShell(episodeFilenameBase)
     )
-    .replace(/{{url}}/g, escapeArgForShell(episodeAudioUrl));
+    .replace(/{{\s*url\s*}}/g, escapeArgForShell(episodeAudioUrl));
 
   await execWithPromise(execCmd, { stdio: "ignore" });
 };

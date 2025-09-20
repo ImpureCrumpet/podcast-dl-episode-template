@@ -74,7 +74,9 @@ export const getItemFilename = ({
     let name = segment;
     templateReplacementsTuples.forEach((replacementTuple) => {
       const [matcher, replacement] = replacementTuple;
-      const replaceRegex = new RegExp(`{{${matcher}}}`, "g");
+      // The original replacement used a literal string like `{{title}}`, which failed if the template contained extra whitespace (e.g., `{{ title }}`).
+      // Use a flexible regex to allow optional whitespace: `\s*` matches any spaces around the key.
+      const replaceRegex = new RegExp(`{{\\s*${matcher}\\s*}}`, "g");
 
       name = replacement
         ? name.replace(replaceRegex, replacement)
@@ -101,7 +103,8 @@ export const getFolderName = ({ feed, template }) => {
   let name = template;
   templateReplacementsTuples.forEach((replacementTuple) => {
     const [matcher, replacement] = replacementTuple;
-    const replaceRegex = new RegExp(`{{${matcher}}}`, "g");
+    // Allow optional whitespace within placeholders (e.g., `{{ podcast_title }}`) to make parsing more robust.
+    const replaceRegex = new RegExp(`{{\\s*${matcher}\\s*}}`, "g");
 
     name = replacement
       ? name.replace(replaceRegex, getSafeName(replacement))

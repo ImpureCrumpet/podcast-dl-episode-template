@@ -1,0 +1,3 @@
+import "../bin/bin.js";
+
+

@@ -2,21 +2,23 @@
 
 A humble CLI for downloading and archiving podcasts.
 
-## How to Use
+## Installation
 
-### npx
+Run once in the project root:
 
-**[Node Required](https://nodejs.org/en/)**
+```bash
+npm install
+```
 
-`npx podcast-dl --url <PODCAST_RSS_URL>`
+## Usage
 
-### Binaries
+Run locally with Node:
 
-[Visit the releases page](https://github.com/lightpohl/podcast-dl/releases) and download the latest binary for your system.
+```bash
+node src/cli.js --url "YOUR_RSS_URL" --out-dir "./podcasts"
+```
 
-`podcast-dl --url <PODCAST_RSS_URL>`
-
-### [More Examples](./docs/examples.md)
+[More examples](./docs/examples.md)
 
 ## Options
 
